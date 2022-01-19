@@ -3,9 +3,10 @@ Game.Achievements['Third-party'].desc = 'Used the <b>add-on</b>: <b>Cookie Crunc
 Game.Achievements['Third-party'].won = 1;
 
 // Add the CSS
-var cruncherCSS = document.createElement('link');
+var cruncherVersion = /@(.*?)\//i.exec(document.currentScript.src)[1],
+    cruncherCSS = document.createElement('link');
 cruncherCSS.setAttribute('rel', 'stylesheet');
-cruncherCSS.setAttribute('href', 'https://cdn.jsdelivr.net/gh/chibu/CookieCruncher@Dev/CookieCruncher.css?t='+Date.now());
+cruncherCSS.setAttribute('href', 'https://cdn.jsdelivr.net/gh/chibu/CookieCruncher@' + cruncherVersion + '/CookieCruncher.css');
 document.head.appendChild(cruncherCSS);
 
 document.getElementById('storeTitle').onmouseover=function() {
