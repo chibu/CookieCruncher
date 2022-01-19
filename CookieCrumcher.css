@@ -1,0 +1,11 @@
+#topBar, support, #smallSupport {
+  display: none;
+}
+
+#game {
+ top: 0px; 
+}
+
+#centerArea {
+ overflow-y: auto; 
+}
