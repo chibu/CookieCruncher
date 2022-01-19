@@ -2,6 +2,12 @@
 Game.Achievements['Third-party'].desc = 'Used the <b>add-on</b>: <b>Cookie Cruncher</b> by <b>Chibu</b>.<q>Om nom nom.</q>'
 Game.Achievements['Third-party'].won = 1;
 
+// Add the CSS
+var cruncherCSS = document.createElement('link');
+cruncherCSS.setAttribute('rel', 'stylesheet');
+cruncherCSS.setAttribute('href', 'https://cdn.jsdelivr.net/gh/chibu/CookieCruncher@Dev/CookieCruncher.css?t='+Date.now());
+document.head.appendChild(cruncherCSS);
+
 document.getElementById('storeTitle').onmouseover=function() {
 	Game.tooltip.dynamic=0;
 	Game.tooltip.draw(this, function () {
@@ -49,10 +55,3 @@ document.getElementById('storeTitle').onmouseover=function() {
 	},'store');
 	Game.tooltip.wobble();
 };
-
-// Some element styles
-document.getElementById('topBar').style.display="none";
-document.getElementById('game').style.top="0px";
-document.getElementById('centerArea').style.overflowY="auto";
-document.getElementById('smallSupport').parentNode.removeChild(document.getElementById('smallSupport'));
-document.getElementById('support').parentNode.removeChild(document.getElementById('support'));
