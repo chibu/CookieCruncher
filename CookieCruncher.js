@@ -1,3 +1,7 @@
+// This is an add-on
+Game.Achievements['Third-party'].desc = 'Used the <b>add-on</b>: <b>Cookie Cruncher</b> by <b>Chibu</b>.<q>Om nom nom.</q>'
+Game.Achievements['Third-party'].won = 1;
+
 document.getElementById('storeTitle').onmouseover=function() {
 	Game.tooltip.dynamic=0;
 	Game.tooltip.draw(this, function () {
