@@ -1,11 +1,86 @@
+#cruncher {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 48px;
+  z-index: 100000;
+  transform-origin: 100% 0%;
+  transform: scale(0.75);
+}
+
+#cruncher .crate {
+  float: none;
+}
+
+.cc-prompt {
+  min-width: 200px;
+  text-align: center;
+  font-size: 11px;
+  margin: 8px 0px;
+}
+
+#CCautoClick {
+  background-position: -526px 0px;
+}
+#CCgoldenClick {
+  background-position: -480px -624px;
+}
+#CCwrinklerClick {
+  background-position-x: -910px;
+  background-position-y: -384px;
+}
+#CCgetFortunes {
+ background-position-x: -1390px;
+ background-position-y: -384px;
+}
+#CCautoHarvest {
+    background-position-x: -1344px;
+    background-position-y: -958px;
+}
+#CCautoCast {
+    background-position-x: -815px;
+    background-position-y: 0px;
+}
+#CCsettings {
+  background-position: -192px 0px;
+}
+
+
+.store-tooltip {
+  padding: 8px;
+  min-width: 300px;
+}
+
+.store-tooltip .icon {
+  float: left;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.store-tooltip .prices {
+  float: right;
+  text-align: right;
+  font-weight: bold;
+  color: #6f6;
+}
+
+/* Other UI changes */
 #topBar, #support, #smallSupport {
   display: none;
 }
 
 #game {
- top: 0px; 
+ top: 0px;
 }
 
 #centerArea {
- overflow-y: auto; 
+ overflow-y: auto;
+}
+
+a.option {
+  margin-bottom: 10px;
+}
+
+a.option.disabled {
+  opacity: .5;
 }
