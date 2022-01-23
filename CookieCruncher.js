@@ -160,7 +160,7 @@ var CookieCruncher = {
               }
               /* TODO: check to see if this works */
               /* average lifespan: Math.ceil((100/((me.ageTick+me.ageTickR/2)))*(1)) */
-              else if (Math.ceil((100/(M.plotBoost[y][x][0]*(plant.ageTick+plant.ageTickR/2)))*((100-tile[1])/100))==1) {
+              else if (Math.ceil((100/(M.plotBoost[y][x][0]*(plant.ageTick+plant.ageTickR/2)))*((100-tile[1])/100))<=2) {
                 M.harvest(x, y ,1);
                 M.useTool(id, x, y);
               }
@@ -203,7 +203,6 @@ var CookieCruncher = {
   },
 
   buildings: [],
-  /* TODO: use .bulkPrice if Game.buyBulk */
   bestDeals: function() {
   	Game.tooltip.dynamic=0;
   	Game.tooltip.draw(this, function () {
