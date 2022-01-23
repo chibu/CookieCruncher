@@ -120,19 +120,20 @@ var CookieCruncher = {
       description: () => 'Rotate through the news feed until a furtune comes up.',
       isActive: () => Game.UpgradesById[643].bought,
       action: function() {
-        var timeout = 5;
+        var timeout = 5,
+            me = CookieCruncher.clickers.getFortunes;
         Game.getNewTicker();
-        this.count ? this.count++ : (this.count = 1);
+        me.count ? me.count++ : (me.count = 1);
         if (commentsText.firstChild.className) {
           timeout = 5000;
-          this.count = 0;
+          me.count = 0;
         }
-        if (this.count < 200)
-          this.timer=setTimeout(this.action, timeout)
+        if (me.count < 200)
+          me.timer=setTimeout(me.action, timeout)
         else {
-          _toggle(this.element);
-          this.settings.on = false;
-          this.count = 0;
+          _toggle(me.element);
+          me.settings.on = false;
+          me.count = 0;
         }
 
       }
