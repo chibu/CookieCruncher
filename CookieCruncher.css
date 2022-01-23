@@ -45,12 +45,22 @@
   background-position: -192px 0px;
 }
 
+#toggleBox.best-deals {
+  display: block;
+  top: 0px;
+  right: 324px;
+  width: auto;
+  text-align: left;
+}
 
 .store-tooltip {
   padding: 8px;
   min-width: 300px;
 }
-
+.store-tooltip .heading {
+  text-align: center;
+  padding-bottom: 5px;
+}
 .store-tooltip .icon {
   float: left;
   margin-left: -8px;

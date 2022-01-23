@@ -204,57 +204,86 @@ var CookieCruncher = {
 
   buildings: [],
   bestDeals: function() {
-  	Game.tooltip.dynamic=0;
-  	Game.tooltip.draw(this, function () {
-  		CookieCruncher.buildings = [];
-  		Game.ObjectsById.forEach((building, index) => {
-  			if (!building.locked)
-  				CookieCruncher.buildings.push({
-  					'icon': building.iconColumn,
-  					'price': building.bulkPrice,
-  					'canBuy':Game.cookies>=building.bulkPrice,
-  					'name': building.name,
-  					'count': building.amount,
-  					'value': building.bulkPrice/(building.storedCps*Game.globalCpsMult*Game.buyBulk)
-  				});
+    /*
+    str+=;
+		str+='<h3>'+this.name+'</h3>'+
 
-  		});
-  		CookieCruncher.buildings.sort((a, b) => a.value - b.value);
-  		output = '<div class="store-tooltip">';
-  		CookieCruncher.buildings.forEach(building => {
-  			var time = (building.price-Game.cookies)/Game.cookiesPs;
-        var value = Math.round(((building.value/CookieCruncher.buildings[0].value)-1)*100);
-  			output += `
-    			<div class="icon" style="background-position:${(-48*building.icon)}px 0px;"></div>
-    			<div class="prices">
-    				${(value > 0 ? '<small>+</small>' + Beautify(value) + '%<br>' : '<br>')}
-    				<small>
-    					<span class="price ${(building.canBuy?'':'disabled')}" style="padding-top:3px">${Beautify(Math.round(building.price))}</span>
-    				</small>
-    			</div>
-    			<div class="name">${building.name}</div>
-    			<small>
-            [owned: ${building.count}]
-            ${(time > 0 ? `${Math.floor(time/86400)}, ${Math.floor(time%2586400/3600)}:${+Math.floor(time%253600/60)}:${Math.floor(time%2560)}`:'')}
-    			</small>
-    			<div class="line"></div>
-        `
-  		});
-  		output += `<div style="font-weight:bold">per second: <span class="price">${Beautify(Game.cookiesPs)}</span>
-                  <br>per minute: <span class="price">${Beautify(Game.cookiesPs*60)}</span>
-                  <br>per 10 minutes: <span class="price">${Beautify(Game.cookiesPs*600)}</span>
-                  <br>per 30 minutes: <span class="price">${Beautify(Game.cookiesPs*1800)}</span>
-                  <br>per hour: <span class="price">${Beautify(Game.cookiesPs*3600)}</span>
-                  <br>per day: <span class="price">${Beautify(Game.cookiesPs*86400)}</span>
-                  </div>
-              </div>`;
-  		return output;
-  	},'store');
-  	Game.tooltip.wobble();
+    l('toggleBox').innerHTML=str;
+		l('toggleBox').style.display='block';
+		l('toggleBox').focus();
+		Game.tooltip.hide();
+
+
+    */
+    CookieCruncher.buildings = [];
+    Game.ObjectsById.forEach((building, index) => {
+      if (!building.locked)
+        CookieCruncher.buildings.push({
+          'icon': building.iconColumn,
+          'price': building.bulkPrice,
+          'canBuy':Game.cookies>=building.bulkPrice,
+          'name': building.name,
+          'count': building.amount,
+          'value': building.bulkPrice/(building.storedCps*Game.globalCpsMult*Game.buyBulk)
+        });
+
+    });
+    CookieCruncher.buildings.sort((a, b) => a.value - b.value);
+    output = `<div class="store-tooltip prompt">`
+    if (window['dealsActive'])
+      output += `<div class="close" onclick="window['dealsActive']=false;l('toggleBox').classList.remove('best-deals');">x</div>`;
+    output += `  <div class="heading">
+                   <h3>Best Deals</h3>
+                 </div>
+                 <div class="line"></div>`;
+    CookieCruncher.buildings.forEach(building => {
+      var time = (building.price-Game.cookies)/Game.cookiesPs;
+      var value = Math.round(((building.value/CookieCruncher.buildings[0].value)-1)*100);
+      output += `
+        <div class="icon" style="background-position:${(-48*building.icon)}px 0px;"></div>
+        <div class="prices">
+          ${(value > 0 ? '<small>+</small>' + Beautify(value) + '%<br>' : '<br>')}
+          <small>
+            <span class="price ${(building.canBuy?'':'disabled')}" style="padding-top:3px">${Beautify(Math.round(building.price))}</span>
+          </small>
+        </div>
+        <div class="name">${building.name}</div>
+        <small>
+          [owned: ${building.count}]
+          ${(time > 0 ? `${Math.floor(time/86400)}, ${Math.floor(time%2586400/3600)}:${+Math.floor(time%253600/60)}:${Math.floor(time%2560)}`:'')}
+        </small>
+        <div class="line"></div>
+      `
+    });
+    output += `<div style="font-weight:bold">per second: <span class="price">${Beautify(Game.cookiesPs)}</span>
+                <br>per minute: <span class="price">${Beautify(Game.cookiesPs*60)}</span>
+                <br>per 10 minutes: <span class="price">${Beautify(Game.cookiesPs*600)}</span>
+                <br>per 30 minutes: <span class="price">${Beautify(Game.cookiesPs*1800)}</span>
+                <br>per hour: <span class="price">${Beautify(Game.cookiesPs*3600)}</span>
+                <br>per day: <span class="price">${Beautify(Game.cookiesPs*86400)}</span>
+                </div>
+            </div>`;
+
+    if (window['dealsActive']) {
+      l('toggleBox').innerHTML=output;
+      l('toggleBox').classList.add('best-deals');
+  		l('toggleBox').focus();
+  		Game.tooltip.hide();
+    }
+    else {
+    	Game.tooltip.dynamic=0;
+    	Game.tooltip.draw(this, output,'store');
+    	Game.tooltip.wobble();
+    }
   },
   buildUI: function() {
     storeTitle.onmouseover=this.bestDeals;
     storeTitle.onmouseout=this.clickerEvents.mouseout;
+    storeTitle.onclick = function() {
+      window['dealsActive'] = true;
+      CookieCruncher.bestDeals();
+    }
+    storeTitle.title = "Click to keep open";
 
     var container = document.createElement('div');
     container.id = 'cruncher';
