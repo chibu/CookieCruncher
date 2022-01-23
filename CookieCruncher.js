@@ -204,18 +204,8 @@ var CookieCruncher = {
   },
 
   buildings: [],
-  bestDeals: function() {
-    /*
-    str+=;
-		str+='<h3>'+this.name+'</h3>'+
-
-    l('toggleBox').innerHTML=str;
-		l('toggleBox').style.display='block';
-		l('toggleBox').focus();
-		Game.tooltip.hide();
-
-
-    */
+  bestDeals: function(draw=false) {
+    if (!window['dealsActive']) draw = false;
     CookieCruncher.buildings = [];
     Game.ObjectsById.forEach((building, index) => {
       if (!building.locked)
@@ -230,13 +220,17 @@ var CookieCruncher = {
 
     });
     CookieCruncher.buildings.sort((a, b) => a.value - b.value);
-    output = `<div class="store-tooltip prompt">`
-    if (window['dealsActive'])
-      output += `<div class="close" onclick="window['dealsActive']=false;l('toggleBox').classList.remove('best-deals');">x</div>`;
-    output += `  <div class="heading">
-                   <h3>Best Deals</h3>
-                 </div>
-                 <div class="line"></div>`;
+    var output = '';
+    if (!draw) {
+      output += `<div class="store-tooltip prompt">`
+      if (window['dealsActive'])
+        output += `<div class="close" onclick="window['dealsActive']=false;l('toggleBox').classList.remove('best-deals');">x</div>`;
+      output += `  <div class="heading">
+                     <h3>Best Deals</h3>
+                   </div>
+                   <div class="line"></div>
+                   <div id="dealsBuildings">`;
+    }
     CookieCruncher.buildings.forEach(building => {
       var time = (building.price-Game.cookies)/Game.cookiesPs;
       var value = Math.round(((building.value/CookieCruncher.buildings[0].value)-1)*100);
@@ -262,14 +256,20 @@ var CookieCruncher = {
                 <br>per 30 minutes: <span class="price">${Beautify(Game.cookiesPs*1800)}</span>
                 <br>per hour: <span class="price">${Beautify(Game.cookiesPs*3600)}</span>
                 <br>per day: <span class="price">${Beautify(Game.cookiesPs*86400)}</span>
-                </div>
-            </div>`;
+                </div>`
+
+    if (!draw) output += `</div></div>`;
 
     if (window['dealsActive']) {
-      l('toggleBox').innerHTML=output;
-      l('toggleBox').classList.add('best-deals');
-  		l('toggleBox').focus();
-  		Game.tooltip.hide();
+      if (draw) {
+        l('dealsBuildings').innerHTML=output;
+      }
+      else {
+        l('toggleBox').innerHTML=output;
+        l('toggleBox').classList.add('best-deals');
+    		l('toggleBox').focus();
+    		Game.tooltip.hide();
+      }
     }
     else {
     	Game.tooltip.dynamic=0;
@@ -277,7 +277,7 @@ var CookieCruncher = {
     	Game.tooltip.wobble();
     }
   },
-  updateDeals: function() { if (window['dealsActive']) CookieCruncher.bestDeals(); },
+  updateDeals: function() { if (window['dealsActive']) CookieCruncher.bestDeals(true); },
   buildUI: function() {
     storeTitle.onmouseover=this.bestDeals;
     storeTitle.onmouseout=this.clickerEvents.mouseout;
