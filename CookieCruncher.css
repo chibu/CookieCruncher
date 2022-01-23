@@ -74,6 +74,10 @@
   color: #6f6;
 }
 
+.store-tooltip .line {
+  margin: 6px auto 8px;
+}
+
 /* Other UI changes */
 #topBar, #support, #smallSupport {
   display: none;
