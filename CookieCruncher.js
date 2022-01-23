@@ -47,6 +47,7 @@ var CookieCruncher = {
     // Game.registerHook('click',function(){Game.Notify(choose(['A good click.','A solid click.','A mediocre click.','An excellent click!']),'',0,0.5);});
     // Game.registerHook('cps',function(cps){return cps*2;});
     Game.registerHook('check', this.updateUI);
+    Game.registerHook('draw', this.updateDeals);
   },
 
   save: function(){
@@ -276,6 +277,7 @@ var CookieCruncher = {
     	Game.tooltip.wobble();
     }
   },
+  updateDeals: function() { if (window['dealsActive']) CookieCruncher.bestDeals(); },
   buildUI: function() {
     storeTitle.onmouseover=this.bestDeals;
     storeTitle.onmouseout=this.clickerEvents.mouseout;
